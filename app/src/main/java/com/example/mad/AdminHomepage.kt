@@ -3,22 +3,25 @@ package com.example.mad
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_admin_homepage.*
+import com.example.mad.databinding.ActivityAdminHomepageBinding
 
 class AdminHomepage : AppCompatActivity() {
+    private lateinit var binding: ActivityAdminHomepageBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_admin_homepage)
+        binding = ActivityAdminHomepageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        imageView5.setOnClickListener{
+        binding.imageView5.setOnClickListener{
             startActivity(Intent(this,cropreadadmin::class.java))
         }
 
-        imageView8.setOnClickListener{
+        binding.imageView8.setOnClickListener{
             startActivity(Intent(this,ArticleAdminMain::class.java))
         }
 
-        imageView6.setOnClickListener{
+        binding.imageView6.setOnClickListener{
             startActivity(Intent(this,productreadadmin::class.java))
         }
     }

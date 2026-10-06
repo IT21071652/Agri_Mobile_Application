@@ -1,37 +1,27 @@
 package com.example.mad
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.example.mad.ui.AgriApp
+import com.example.mad.ui.AgriTheme
 
 class MainActivity : AppCompatActivity() {
+
+    private val dashboardViewModel: DashboardViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        /*button.setOnClickListener {
-            startActivity(Intent(this, AddCrop::class.java))
+        setContent {
+            AgriTheme {
+                AgriApp(viewModel = dashboardViewModel)
+            }
         }
+    }
 
-        button2.setOnClickListener {
-            startActivity(Intent(this, cropreadadmin::class.java))
-        }
-
-        button3.setOnClickListener {
-            startActivity(Intent(this, CropsReadUser::class.java))
-        }*/
-
-        button5.setOnClickListener {
-            startActivity(Intent(this, Homepage::class.java))
-        }
-
-        /*button6.setOnClickListener {
-            startActivity(Intent(this, ArticleAdminMain::class.java))
-        }*/
-
-        button7.setOnClickListener {
-            startActivity(Intent(this, AdminHomepage::class.java))
-        }
+    override fun onResume() {
+        super.onResume()
+        dashboardViewModel.refresh()
     }
 }

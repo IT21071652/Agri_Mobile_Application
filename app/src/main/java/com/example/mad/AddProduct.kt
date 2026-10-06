@@ -12,36 +12,38 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.mad.Database.DbHelperProduct
 import com.example.mad.Model.ProductModel
-import kotlinx.android.synthetic.main.activity_add_product.*
+import com.example.mad.databinding.ActivityAddProductBinding
 import java.io.ByteArrayOutputStream
 
 class AddProduct : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAddProductBinding
     private val REQUEST_IMAGE_GALLERY = 132
     private lateinit var imageFilePath:Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_product)
+        binding = ActivityAddProductBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        productImage.setOnClickListener {
+        binding.productImage.setOnClickListener {
             showAlertBox(this)
         }
 
 
-        addProduct.setOnClickListener {
+        binding.addProduct.setOnClickListener {
 
             val db = DbHelperProduct(this);
 
 
             //val image=uploadImg.get
-            val productName = productType.text.toString();
-            val productRegion = productRegion.text.toString();
-            val productPrice = productPrice.text.toString();
+            val productName = binding.productType.text.toString()
+            val productRegion = binding.productRegion.text.toString()
+            val productPrice = binding.productPrice.text.toString()
 
 
             //convert imageView to bitmap
-            val bitmap = (productImage.drawable as BitmapDrawable).bitmap
+            val bitmap = (binding.productImage.drawable as BitmapDrawable).bitmap
 
             //convert bitmap to byte array
             val stream = ByteArrayOutputStream()
@@ -77,7 +79,7 @@ class AddProduct : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode==REQUEST_IMAGE_GALLERY && resultCode== RESULT_OK && data!=null){
-            productImage.setImageURI(data.data)
+            binding.productImage.setImageURI(data.data)
             imageFilePath= data.data!!
 
 

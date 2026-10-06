@@ -15,8 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.mad.Database.DbHelperArticles
 import com.example.mad.Model.NewsModal
-import kotlinx.android.synthetic.main.activity_add_articles_admin.*
-import kotlinx.android.synthetic.main.activity_add_news_admin.*
+import com.example.mad.databinding.ActivityAddNewsAdminBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,14 +23,16 @@ import java.util.*
 class AddNewsAdmin : AppCompatActivity() {
 
 
+    private lateinit var binding: ActivityAddNewsAdminBinding
     private val REQUEST_IMAGE_GALLERY=132
     private lateinit var imageFilePath: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_news_admin)
+        binding = ActivityAddNewsAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val etStartDateNE = findViewById<EditText>(R.id.newsDate)
+        val etStartDateNE = binding.newsDate
         etStartDateNE.isFocusable = false
 
         val calendar = Calendar.getInstance()
@@ -56,15 +57,15 @@ class AddNewsAdmin : AppCompatActivity() {
 
 
 
-        newsuploadImage.setOnClickListener{
+        binding.newsuploadImage.setOnClickListener{
             showAlertBox(this)
         }
 
-        button4.setOnClickListener {
+        binding.button4.setOnClickListener {
             startActivity(Intent(this, NewsReadAdmin::class.java))
         }
 
-        newsSubmit.setOnClickListener{
+        binding.newsSubmit.setOnClickListener{
 
             var db= DbHelperArticles(this)
 
@@ -72,13 +73,13 @@ class AddNewsAdmin : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            var newsTitle=newsType.text.toString()
-            var newsDate = newsDate.text.toString()
-            var newsDescription = newsDescription.text.toString()
-            var newsSiteLink = newsSitelink.text.toString()
+            val newsTitle = binding.newsType.text.toString()
+            val newsDate = binding.newsDate.text.toString()
+            val newsDescription = binding.newsDescription.text.toString()
+            val newsSiteLink = binding.newsSitelink.text.toString()
 
             //convert imageview to bitmap
-            val bitmap = (newsuploadImage.drawable as BitmapDrawable).bitmap
+            val bitmap = (binding.newsuploadImage.drawable as BitmapDrawable).bitmap
 
             //convert bitmap to byte array
             val stream = ByteArrayOutputStream()
@@ -108,7 +109,7 @@ class AddNewsAdmin : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode==REQUEST_IMAGE_GALLERY && resultCode== Activity.RESULT_OK && data!=null){
-            newsuploadImage.setImageURI(data.data)
+            binding.newsuploadImage.setImageURI(data.data)
             imageFilePath= data.data!!
 
 
@@ -143,20 +144,20 @@ class AddNewsAdmin : AppCompatActivity() {
     }
 
     private fun validation():Boolean{
-        if(newsType.text.isNullOrEmpty()){
-            newsType.error="Please Enter the news type"
+        if(binding.newsType.text.isNullOrEmpty()){
+            binding.newsType.error="Please Enter the news type"
             return false;
         }
-        if(newsDate.text.isNullOrEmpty()){
-            newsDate.error="please Enter the date"
+        if(binding.newsDate.text.isNullOrEmpty()){
+            binding.newsDate.error="please Enter the date"
             return false
         }
-        if(newsDescription.text.isNullOrEmpty()){
-            newsDescription.error="Please Enter the content"
+        if(binding.newsDescription.text.isNullOrEmpty()){
+            binding.newsDescription.error="Please Enter the content"
             return false
         }
-        if(newsSitelink.text.isNullOrEmpty()){
-            newsSitelink.error="Please Enter the content"
+        if(binding.newsSitelink.text.isNullOrEmpty()){
+            binding.newsSitelink.error="Please Enter the content"
             return false
         }
         return true

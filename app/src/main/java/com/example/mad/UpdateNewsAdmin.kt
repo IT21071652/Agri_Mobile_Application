@@ -8,17 +8,17 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.mad.Database.DbHelperArticles
 import com.example.mad.Model.NewsModal
-import kotlinx.android.synthetic.main.activity_update_articles_admin.*
-import kotlinx.android.synthetic.main.activity_update_news_admin.*
-import kotlinx.android.synthetic.main.activity_update_news_admin.cancel_button
+import com.example.mad.databinding.ActivityUpdateNewsAdminBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class UpdateNewsAdmin : AppCompatActivity() {
 
+    private lateinit var binding: ActivityUpdateNewsAdminBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_update_news_admin)
+        binding = ActivityUpdateNewsAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val etStartDateNE = findViewById<EditText>(R.id.newsdateEdit)
         etStartDateNE.isFocusable = false
@@ -52,25 +52,25 @@ class UpdateNewsAdmin : AppCompatActivity() {
 
         news=db.getNews(id)
 
-        newsTypeEdit.setText(news.news_Title).toString()
-        newsdateEdit.setText(news.news_Date).toString()
-        newsDescriptionEdit.setText(news.news_description).toString()
-        newsSitelinkEdit.setText(news.news_sitelink).toString()
+        binding.newsTypeEdit.setText(news.news_Title)
+        binding.newsdateEdit.setText(news.news_Date)
+        binding.newsDescriptionEdit.setText(news.news_description)
+        binding.newsSitelinkEdit.setText(news.news_sitelink)
 
 
         //cancel
 
-        cancel_button.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             startActivity(Intent(this, NewsReadAdmin::class.java))
         }
 
         //update
-        updatenewsbtn.setOnClickListener{
+        binding.updatenewsbtn.setOnClickListener{
 
-            var newstitle=newsTypeEdit.text.toString()
-            var newsdate=newsdateEdit.text.toString()
-            var newsdiscription=newsDescriptionEdit.text.toString()
-            var newssitelink=newsSitelinkEdit.text.toString()
+            var newstitle=binding.newsTypeEdit.text.toString()
+            var newsdate=binding.newsdateEdit.text.toString()
+            var newsdiscription=binding.newsDescriptionEdit.text.toString()
+            var newssitelink=binding.newsSitelinkEdit.text.toString()
 
 
             news= NewsModal(id,newstitle,newsdate,newsdiscription,newssitelink)

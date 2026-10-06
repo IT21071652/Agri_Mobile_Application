@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mad.Adapter.NewsAdminAdapter
 import com.example.mad.Database.DbHelperArticles
 import com.example.mad.Model.NewsModal
-import kotlinx.android.synthetic.main.activity_news_read_admin.*
+import com.example.mad.databinding.ActivityNewsReadAdminBinding
 
 
 class NewsReadAdmin : AppCompatActivity() {
+    private lateinit var binding: ActivityNewsReadAdminBinding
     lateinit var recyclerView: RecyclerView
     lateinit var btnadd: Button
 
@@ -25,16 +26,17 @@ class NewsReadAdmin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_read_admin)
-        recyclerView = findViewById(R.id.recyclerView)
+        binding = ActivityNewsReadAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recyclerView = binding.recyclerView
         DbHelp = DbHelperArticles(this)
         val db = DbHelperArticles(this)
 
         fetchlist()
 
-        var deleteNewsBtn=findViewById<Button>(R.id.deletenewsbtn)
+        var deleteNewsBtn = binding.deletenewsbtn
 
-        var addNewsbtn=findViewById<Button>(R.id.addNews)
+        var addNewsbtn = binding.addNews
 
         addNewsbtn.setOnClickListener{
             startActivity(Intent(this,AddNewsAdmin::class.java))
@@ -43,7 +45,7 @@ class NewsReadAdmin : AppCompatActivity() {
         }
 
         deleteNewsBtn.setOnClickListener{
-            var id = editNumber.text.toString()
+            var id = binding.editNumber.text.toString()
             println(id)
 
             val iD = id.toInt()//Casting
@@ -59,8 +61,8 @@ class NewsReadAdmin : AppCompatActivity() {
             }
         }
 
-        updatenewsBtn.setOnClickListener{
-            var id = editNumber.text.toString()
+        binding.updatenewsBtn.setOnClickListener{
+            var id = binding.editNumber.text.toString()
             println(id)
             val intent = Intent(this, UpdateNewsAdmin::class.java)
             intent.putExtra("id", id)//bind the Id value and send update page

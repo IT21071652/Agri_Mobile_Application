@@ -29,6 +29,18 @@ class DbHelperCrop(context: Context): SQLiteOpenHelper(context, DB_NAME,null, DB
         val CREATE_TABLE =
             "CREATE TABLE $TABLE_NAME6 ($CROP_ID INTEGER PRIMARY KEY,$CROP_NAME TEXT,$CROP_REGION TEXT,$CROP_PRICE TEXT,$CROP_IMAGE TEXT)"
         p0?.execSQL(CREATE_TABLE);
+        p0?.insert(TABLE_NAME6, null, ContentValues().apply {
+            put(CROP_NAME, "Tomato")
+            put(CROP_REGION, "Gampaha")
+            put(CROP_PRICE, "Sample price: LKR 180/kg")
+            put(CROP_IMAGE, "")
+        })
+        p0?.insert(TABLE_NAME6, null, ContentValues().apply {
+            put(CROP_NAME, "Paddy")
+            put(CROP_REGION, "Kurunegala")
+            put(CROP_PRICE, "Sample price: LKR 95/kg")
+            put(CROP_IMAGE, "")
+        })
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {

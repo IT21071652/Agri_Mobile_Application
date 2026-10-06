@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mad.Adapter.ProductsAdapter
 import com.example.mad.Database.DbHelperProduct
 import com.example.mad.Model.ProductModel
-import kotlinx.android.synthetic.main.activity_productreadadmin.*
+import com.example.mad.databinding.ActivityProductreadadminBinding
 
 class productreadadmin : AppCompatActivity() {
+    private lateinit var binding: ActivityProductreadadminBinding
     lateinit var recyclerView: RecyclerView
     lateinit var btnadd: Button
 
@@ -24,16 +25,17 @@ class productreadadmin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_productreadadmin)
-        recyclerView = findViewById(R.id.recyclerView)
+        binding = ActivityProductreadadminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recyclerView = binding.recyclerView
         DbHelp = DbHelperProduct(this)
         val db = DbHelperProduct(this)
 
         fetchlist()
 
-        var deleteBtn=findViewById<Button>(R.id.deletebtn)
+        var deleteBtn = binding.deletebtn
 
-        var addArticlebtn=findViewById<Button>(R.id.addArticle)
+        var addArticlebtn = binding.addArticle
 
         addArticlebtn.setOnClickListener{
             startActivity(Intent(this,AddProduct::class.java))
@@ -42,7 +44,7 @@ class productreadadmin : AppCompatActivity() {
         }
 
         deleteBtn.setOnClickListener{
-            var id = editNumber.text.toString()
+            var id = binding.editNumber.text.toString()
             println(id)
 
             val iD = id.toInt()//Casting
@@ -58,8 +60,8 @@ class productreadadmin : AppCompatActivity() {
             }
         }
 
-        updatebtn.setOnClickListener{
-            var id = editNumber.text.toString()
+        binding.updatebtn.setOnClickListener{
+            var id = binding.editNumber.text.toString()
             println(id)
             val intent = Intent(this, UpdateProductsAdmin::class.java)
             intent.putExtra("id", id)//bind the Id value and send update page

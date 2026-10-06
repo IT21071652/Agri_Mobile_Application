@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mad.Adapter.ArticleAdminAdapter
 import com.example.mad.Database.DbHelperArticles
 import com.example.mad.Model.ArticlesModal
-import kotlinx.android.synthetic.main.activity_artcle_read_admin.*
+import com.example.mad.databinding.ActivityArtcleReadAdminBinding
 
 class ArtcleReadAdmin : AppCompatActivity() {
 
+    private lateinit var binding: ActivityArtcleReadAdminBinding
     lateinit var recyclerView: RecyclerView
     lateinit var btnadd: Button
 
@@ -25,16 +26,17 @@ class ArtcleReadAdmin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_artcle_read_admin)
-        recyclerView = findViewById(R.id.recyclerView)
+        binding = ActivityArtcleReadAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recyclerView = binding.recyclerView
         DbHelp = DbHelperArticles(this)
         val db = DbHelperArticles(this)
 
         fetchlist()
 
-        var deleteBtn=findViewById<Button>(R.id.deletebtn)
+        var deleteBtn = binding.deletebtn
 
-        var addArticlebtn=findViewById<Button>(R.id.addArticle)
+        var addArticlebtn = binding.addArticle
 
         addArticlebtn.setOnClickListener{
             startActivity(Intent(this,AddArticlesAdmin::class.java))
@@ -43,7 +45,7 @@ class ArtcleReadAdmin : AppCompatActivity() {
         }
 
         deleteBtn.setOnClickListener{
-            var id = editNumber.text.toString()
+            var id = binding.editNumber.text.toString()
             println(id)
 
             val iD = id.toInt()//Casting
@@ -59,8 +61,8 @@ class ArtcleReadAdmin : AppCompatActivity() {
             }
         }
 
-        updatebtn.setOnClickListener{
-            var id = editNumber.text.toString()
+        binding.updatebtn.setOnClickListener{
+            var id = binding.editNumber.text.toString()
             println(id)
             val intent = Intent(this, UpdateArticlesAdmin::class.java)
             intent.putExtra("id", id)//bind the Id value and send update page

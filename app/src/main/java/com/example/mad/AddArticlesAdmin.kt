@@ -15,22 +15,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.mad.Database.DbHelperArticles
 import com.example.mad.Model.ArticlesModal
-import kotlinx.android.synthetic.main.activity_add_articles_admin.*
-import kotlinx.android.synthetic.main.activity_add_articles_admin.cancel_button
-import kotlinx.android.synthetic.main.activity_add_news_admin.*
+import com.example.mad.databinding.ActivityAddArticlesAdminBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddArticlesAdmin : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAddArticlesAdminBinding
     private val REQUEST_IMAGE_GALLERY = 132
     private lateinit var imageFilePath: Uri
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_articles_admin)
+        binding = ActivityAddArticlesAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val etStartDateNE = findViewById<EditText>(R.id.date)
+        val etStartDateNE = binding.date
         etStartDateNE.isFocusable = false
 
         val calendar = Calendar.getInstance()
@@ -54,16 +54,16 @@ class AddArticlesAdmin : AppCompatActivity() {
         }
 
 
-        uploadImage.setOnClickListener {
+        binding.uploadImage.setOnClickListener {
             showAlertBox(this)
         }
 
-        cancel_button.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             startActivity(Intent(this, ArtcleReadAdmin::class.java))
         }
 
 
-        articleSubmit.setOnClickListener {
+        binding.articleSubmit.setOnClickListener {
 
             var db = DbHelperArticles(this)
 
@@ -72,12 +72,12 @@ class AddArticlesAdmin : AppCompatActivity() {
             }
 
 
-            var title = articleType.text.toString()
-            var date = date.text.toString()
-            var description = articleDescription.text.toString()
+            val title = binding.articleType.text.toString()
+            val date = binding.date.text.toString()
+            val description = binding.articleDescription.text.toString()
 
             //convert imageview to bitmap
-            val bitmap = (uploadImage.drawable as BitmapDrawable).bitmap
+            val bitmap = (binding.uploadImage.drawable as BitmapDrawable).bitmap
 
             //convert bitmap to byte array
             val stream = ByteArrayOutputStream()
@@ -108,7 +108,7 @@ class AddArticlesAdmin : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == Activity.RESULT_OK && data != null) {
-            uploadImage.setImageURI(data.data)
+            binding.uploadImage.setImageURI(data.data)
             imageFilePath = data.data!!
 
 
@@ -140,16 +140,16 @@ class AddArticlesAdmin : AppCompatActivity() {
     }
 
     private fun validation():Boolean{
-        if(articleType.text.isNullOrEmpty()){
-            articleType.error="Please Enter the article type"
+        if(binding.articleType.text.isNullOrEmpty()){
+            binding.articleType.error="Please Enter the article type"
             return false;
         }
-        if(date.text.isNullOrEmpty()){
-            date.error="please Enter the date"
+        if(binding.date.text.isNullOrEmpty()){
+            binding.date.error="please Enter the date"
             return false
         }
-        if(articleDescription.text.isNullOrEmpty()){
-            articleDescription.error="Please Enter the content"
+        if(binding.articleDescription.text.isNullOrEmpty()){
+            binding.articleDescription.error="Please Enter the content"
             return false
         }
         return true

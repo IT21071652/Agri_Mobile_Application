@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mad.Adapter.CropsUserAdapter
 import com.example.mad.Database.DbHelperCrop
 import com.example.mad.Model.CropModel
-import kotlinx.android.synthetic.main.activity_crops_read_user.*
+import com.example.mad.databinding.ActivityCropsReadUserBinding
 
 class CropsReadUser : AppCompatActivity() {
 
+    private lateinit var binding: ActivityCropsReadUserBinding
     lateinit var recyclerView: RecyclerView
     lateinit var btnadd: Button
 
@@ -24,16 +25,17 @@ class CropsReadUser : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_crops_read_user)
+        binding = ActivityCropsReadUserBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView = binding.recyclerView
         DbHelp = DbHelperCrop(this)
         val db = DbHelperCrop(this)
 
         fetchlist()
 
-        imageButton.setOnClickListener{
-            startActivity(Intent(this,Homepage::class.java))
+        binding.imageButton.setOnClickListener{
+            finish()
         }
     }
     private fun fetchlist(){

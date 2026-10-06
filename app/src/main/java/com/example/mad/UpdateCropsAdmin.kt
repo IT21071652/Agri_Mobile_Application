@@ -6,14 +6,16 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.mad.Database.DbHelperCrop
 import com.example.mad.Model.CropModel
-import kotlinx.android.synthetic.main.activity_update_crops_admin.*
+import com.example.mad.databinding.ActivityUpdateCropsAdminBinding
 
 class UpdateCropsAdmin : AppCompatActivity() {
 
+    private lateinit var binding: ActivityUpdateCropsAdminBinding
     var crop: CropModel = CropModel();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_update_crops_admin)
+        binding = ActivityUpdateCropsAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 //fetch data
         val value = intent.getStringExtra("id")
         val id = value!!.toInt()
@@ -21,16 +23,16 @@ class UpdateCropsAdmin : AppCompatActivity() {
 
         crop = db.getCrop(id)
 
-        cropTypeEdit.setText(crop.cropName)
-        cropregionEdit.setText(crop.cropRegion)
-        croppriceedit.setText(crop.cropPrice)
+        binding.cropTypeEdit.setText(crop.cropName)
+        binding.cropregionEdit.setText(crop.cropRegion)
+        binding.croppriceedit.setText(crop.cropPrice)
 
         //update
-        cropUpdate.setOnClickListener {
+        binding.cropUpdate.setOnClickListener {
 
-            var title = cropTypeEdit.text.toString()
-            var date = cropregionEdit.text.toString()
-            var discription = croppriceedit.text.toString()
+            var title = binding.cropTypeEdit.text.toString()
+            var date = binding.cropregionEdit.text.toString()
+            var discription = binding.croppriceedit.text.toString()
 
             crop = CropModel(id, title, date, discription)
 

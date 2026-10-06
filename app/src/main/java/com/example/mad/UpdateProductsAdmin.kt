@@ -6,14 +6,16 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.mad.Database.DbHelperProduct
 import com.example.mad.Model.ProductModel
-import kotlinx.android.synthetic.main.activity_update_products_admin.*
+import com.example.mad.databinding.ActivityUpdateProductsAdminBinding
 
 class UpdateProductsAdmin : AppCompatActivity() {
 
+    private lateinit var binding: ActivityUpdateProductsAdminBinding
     var product: ProductModel = ProductModel();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_update_products_admin)
+        binding = ActivityUpdateProductsAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 //fetch data
         val value = intent.getStringExtra("id")
         val id = value!!.toInt()
@@ -21,17 +23,17 @@ class UpdateProductsAdmin : AppCompatActivity() {
 
         product = db.getProduct(id)
 
-        productTypeEdit.setText(product.productName)
-        productregionEdit.setText(product.productRegion)
-        productpriceedit.setText(product.productPrice)
+        binding.productTypeEdit.setText(product.productName)
+        binding.productregionEdit.setText(product.productRegion)
+        binding.productpriceedit.setText(product.productPrice)
 
 
         //update
-        productUpdate.setOnClickListener {
+        binding.productUpdate.setOnClickListener {
 
-            var title = productTypeEdit.text.toString()
-            var date = productregionEdit.text.toString()
-            var discription = productpriceedit.text.toString()
+            var title = binding.productTypeEdit.text.toString()
+            var date = binding.productregionEdit.text.toString()
+            var discription = binding.productpriceedit.text.toString()
 
 
             product = ProductModel(id, title, date, discription)

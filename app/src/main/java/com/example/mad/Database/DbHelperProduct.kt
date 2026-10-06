@@ -29,6 +29,18 @@ class DbHelperProduct(context: Context): SQLiteOpenHelper(context, DB_NAME,null,
         val CREATE_TABLE =
             "CREATE TABLE $TABLE_NAME6 ($PRODUCT_ID INTEGER PRIMARY KEY,$PRODUCT_NAME TEXT,$PRODUCT_REGION TEXT,$PRODUCT_PRICE TEXT,$PRODUCT_IMAGE TEXT)"
         p0?.execSQL(CREATE_TABLE);
+        p0?.insert(TABLE_NAME6, null, ContentValues().apply {
+            put(PRODUCT_NAME, "Organic compost")
+            put(PRODUCT_REGION, "Kandy")
+            put(PRODUCT_PRICE, "Sample price: LKR 1,200/bag")
+            put(PRODUCT_IMAGE, "")
+        })
+        p0?.insert(TABLE_NAME6, null, ContentValues().apply {
+            put(PRODUCT_NAME, "Seedling trays")
+            put(PRODUCT_REGION, "Colombo")
+            put(PRODUCT_PRICE, "Sample price: LKR 450/pack")
+            put(PRODUCT_IMAGE, "")
+        })
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {

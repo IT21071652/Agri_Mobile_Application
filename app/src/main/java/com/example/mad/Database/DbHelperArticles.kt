@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.mad.Model.ArticlesModal
 import com.example.mad.Model.NewsModal
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DbHelperArticles(context: Context): SQLiteOpenHelper(context, DB_NAME,null, DB_VERSION) {
 
@@ -46,6 +49,45 @@ class DbHelperArticles(context: Context): SQLiteOpenHelper(context, DB_NAME,null
             "CREATE TABLE $TABLE_NAME8 ($NEWS_ID INTEGER PRIMARY KEY,$NEWS_TITLE TEXT,$NEWS_DATE TEXT,$NEWS_DISCRIPTION TEXT,$NEWS_sitelink TEXT,$NEWS_IMAGE TEXT)"
         p0?.execSQL(CREATE_TABLE8);
 
+        val sampleDate = SimpleDateFormat("MM/dd/yyyy", Locale.US).format(Date())
+        p0?.insert(TABLE_NAME7, null, ContentValues().apply {
+            put(ARTICLE_TITLE, "Healthy soil starts with compost")
+            put(ARTICLE_DATE, sampleDate)
+            put(
+                ARTICLE_DISCRIPTION,
+                "Use mature compost to improve soil structure, then cover bare beds with mulch to help retain moisture."
+            )
+            put(Artcle_IMAGE, "")
+        })
+        p0?.insert(TABLE_NAME7, null, ContentValues().apply {
+            put(ARTICLE_TITLE, "Simple ways to save irrigation water")
+            put(ARTICLE_DATE, sampleDate)
+            put(
+                ARTICLE_DISCRIPTION,
+                "Check soil moisture before watering and direct water to plant roots. Avoid leaving seedlings in waterlogged soil."
+            )
+            put(Artcle_IMAGE, "")
+        })
+        p0?.insert(TABLE_NAME8, null, ContentValues().apply {
+            put(NEWS_TITLE, "Sample update: Local market listings")
+            put(NEWS_DATE, sampleDate)
+            put(
+                NEWS_DISCRIPTION,
+                "This sample announcement demonstrates how agriculture updates appear in the app. Replace it with verified local news."
+            )
+            put(NEWS_sitelink, "https://www.doa.gov.lk/")
+            put(NEWS_IMAGE, "")
+        })
+        p0?.insert(TABLE_NAME8, null, ContentValues().apply {
+            put(NEWS_TITLE, "Sample update: Seasonal planting")
+            put(NEWS_DATE, sampleDate)
+            put(
+                NEWS_DISCRIPTION,
+                "This sample notice is for demonstration only. Check local agriculture guidance for current planting recommendations."
+            )
+            put(NEWS_sitelink, "https://www.doa.gov.lk/")
+            put(NEWS_IMAGE, "")
+        })
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {

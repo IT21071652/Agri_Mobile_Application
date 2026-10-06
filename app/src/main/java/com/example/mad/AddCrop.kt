@@ -13,23 +13,25 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.mad.Database.DbHelperCrop
 import com.example.mad.Model.CropModel
-import kotlinx.android.synthetic.main.activity_add_crop.*
+import com.example.mad.databinding.ActivityAddCropBinding
 import java.io.ByteArrayOutputStream
 
 class AddCrop : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAddCropBinding
     private val REQUEST_IMAGE_GALLERY = 132
     private lateinit var imageFilePath:Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_crop)
+        binding = ActivityAddCropBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        cropImage.setOnClickListener {
+        binding.cropImage.setOnClickListener {
             showAlertBox(this)
         }
 
-        addCrop.setOnClickListener {
+        binding.addCrop.setOnClickListener {
 
             val db = DbHelperCrop(this);
 
@@ -38,13 +40,13 @@ class AddCrop : AppCompatActivity() {
             }
 
             //val image=uploadImg.get
-            val cropName = cropType.text.toString();
-            val cropRegion = cropRegion.text.toString();
-            val cropPrice = cropPrice.text.toString();
+            val cropName = binding.cropType.text.toString()
+            val cropRegion = binding.cropRegion.text.toString()
+            val cropPrice = binding.cropPrice.text.toString()
 
 
             //convert imageView to bitmap
-            val bitmap = (cropImage.drawable as BitmapDrawable).bitmap
+            val bitmap = (binding.cropImage.drawable as BitmapDrawable).bitmap
 
             //convert bitmap to byte array
             val stream = ByteArrayOutputStream()
@@ -77,7 +79,7 @@ class AddCrop : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode==REQUEST_IMAGE_GALLERY && resultCode== Activity.RESULT_OK && data!=null){
-            cropImage.setImageURI(data.data)
+            binding.cropImage.setImageURI(data.data)
             imageFilePath= data.data!!
 
         }
@@ -109,16 +111,16 @@ class AddCrop : AppCompatActivity() {
     }
 
     private fun validation():Boolean{
-        if(cropType.text.isNullOrEmpty()){
-            cropType.error="Please Enter the Crop Name"
+        if(binding.cropType.text.isNullOrEmpty()){
+            binding.cropType.error="Please Enter the Crop Name"
             return false;
         }
-        if(cropRegion.text.isNullOrEmpty()){
-            cropRegion.error="please Enter the Region"
+        if(binding.cropRegion.text.isNullOrEmpty()){
+            binding.cropRegion.error="please Enter the Region"
             return false
         }
-        if(cropPrice.text.isNullOrEmpty()){
-            cropPrice.error="Please Enter the Price"
+        if(binding.cropPrice.text.isNullOrEmpty()){
+            binding.cropPrice.error="Please Enter the Price"
             return false
         }
         return true

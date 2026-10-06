@@ -8,18 +8,18 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.mad.Database.DbHelperArticles
 import com.example.mad.Model.ArticlesModal
-import kotlinx.android.synthetic.main.activity_add_articles_admin.*
-import kotlinx.android.synthetic.main.activity_update_articles_admin.*
-import kotlinx.android.synthetic.main.activity_update_articles_admin.cancel_button
+import com.example.mad.databinding.ActivityUpdateArticlesAdminBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class UpdateArticlesAdmin : AppCompatActivity() {
 
+    private lateinit var binding: ActivityUpdateArticlesAdminBinding
     var article:ArticlesModal = ArticlesModal();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_update_articles_admin)
+        binding = ActivityUpdateArticlesAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val etStartDateNE = findViewById<EditText>(R.id.dateEdit)
         etStartDateNE.isFocusable = false
@@ -51,23 +51,23 @@ class UpdateArticlesAdmin : AppCompatActivity() {
 
         article=db.getArticles(id)
 
-        articleTypeEdit.setText(article.article_Title)
-        dateEdit.setText(article.article_Date)
-        articleDescriptionEdit.setText(article.article_description)
+        binding.articleTypeEdit.setText(article.article_Title)
+        binding.dateEdit.setText(article.article_Date)
+        binding.articleDescriptionEdit.setText(article.article_description)
 
 
         //cancel
 
-        cancel_button.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             startActivity(Intent(this, ArtcleReadAdmin::class.java))
         }
 
         //update
-        articleUpdate.setOnClickListener{
+        binding.articleUpdate.setOnClickListener{
 
-            var title=articleTypeEdit.text.toString()
-            var date=dateEdit.text.toString()
-            var discription=articleDescriptionEdit.text.toString()
+            var title=binding.articleTypeEdit.text.toString()
+            var date=binding.dateEdit.text.toString()
+            var discription=binding.articleDescriptionEdit.text.toString()
 
 
             article=ArticlesModal(id,title,date,discription)

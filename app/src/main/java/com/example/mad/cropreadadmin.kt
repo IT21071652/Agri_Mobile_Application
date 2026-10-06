@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mad.Adapter.CropsAdapter
 import com.example.mad.Database.DbHelperCrop
 import com.example.mad.Model.CropModel
-import kotlinx.android.synthetic.main.activity_cropreadadmin.*
+import com.example.mad.databinding.ActivityCropreadadminBinding
 
 class cropreadadmin : AppCompatActivity() {
+    private lateinit var binding: ActivityCropreadadminBinding
     lateinit var recyclerView: RecyclerView
     lateinit var btnadd: Button
 
@@ -24,16 +25,17 @@ class cropreadadmin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cropreadadmin)
-        recyclerView = findViewById(R.id.recyclerView)
+        binding = ActivityCropreadadminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recyclerView = binding.recyclerView
         DbHelp = DbHelperCrop(this)
         val db = DbHelperCrop(this)
 
         fetchlist()
 
-        var deleteBtn=findViewById<Button>(R.id.deletebtn)
+        var deleteBtn = binding.deletebtn
 
-        var addArticlebtn=findViewById<Button>(R.id.addArticle)
+        var addArticlebtn = binding.addArticle
 
         addArticlebtn.setOnClickListener{
             startActivity(Intent(this,AddCrop::class.java))
@@ -42,7 +44,7 @@ class cropreadadmin : AppCompatActivity() {
         }
 
         deleteBtn.setOnClickListener{
-            var id = editNumber.text.toString()
+            var id = binding.editNumber.text.toString()
             println(id)
 
             val iD = id.toInt()//Casting
@@ -58,8 +60,8 @@ class cropreadadmin : AppCompatActivity() {
             }
         }
 
-        updatebtn.setOnClickListener{
-            var id = editNumber.text.toString()
+        binding.updatebtn.setOnClickListener{
+            var id = binding.editNumber.text.toString()
             println(id)
             val intent = Intent(this, UpdateCropsAdmin::class.java)
             intent.putExtra("id", id)//bind the Id value and send update page
